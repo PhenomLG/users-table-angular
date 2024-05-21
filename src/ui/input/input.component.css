@@ -1,0 +1,28 @@
+:host {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0;
+    border: 1px solid #BBC5C9;
+    background: var(--white-color, #FFF);
+    color: #1A2124;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    gap: 10px;
+    width: 100%;
+    height: 56px;
+    border-radius: 4px;
+}
+
+:host::placeholder {
+    color: #BBC5C9;
+}
+
+:host:focus {
+    outline: none;
+}
+

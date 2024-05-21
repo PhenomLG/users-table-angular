@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { TButton } from "./button.type";
 
 @Component({
-  selector: 'initium-button',
+  selector: 'button[initium-button]',
   standalone: true,
   imports: [],
   templateUrl: './button.component.html',

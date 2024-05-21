@@ -12,10 +12,10 @@ import { NgIf } from "@angular/common";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxComponent {
+    @Output() flowUpStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
     checked: InputSignal<boolean> = input.required<boolean>();
     id: InputSignal<string> = input.required<string>();
     line: InputSignal<boolean> = input<boolean>(false);
-    @Output() flowUpStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     onChange(e: Event): void {
         let $el: HTMLInputElement = (e.target as HTMLInputElement);

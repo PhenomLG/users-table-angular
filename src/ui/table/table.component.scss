@@ -3,9 +3,11 @@
     padding: 10px 15px;
     background-color: var(--white-color);
     border-radius: 20px;
+    min-width: 800px;
 
     .table {
         width: 100%;
+        padding-left: 6px;
 
         &__controls {
             display: flex;
