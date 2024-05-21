@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DefaultOverlayComponent } from "../../../../../../ui/default-overlay/default-overlay.component";
 import { ButtonComponent } from "../../../../../../ui/button/button.component";
 
@@ -13,5 +13,9 @@ import { ButtonComponent } from "../../../../../../ui/button/button.component";
   styleUrl: './new-client-popup.component.scss'
 })
 export class NewClientPopupComponent {
+    @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
 
+    onCloseModalClick(): void {
+        this.closeModal.emit();
+    }
 }

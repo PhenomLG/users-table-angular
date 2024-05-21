@@ -1,11 +1,6 @@
-import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TableComponent } from "../../../ui/table/table.component";
-import { ApiService } from "../../../api/api.service";
 import { Subscription } from "rxjs";
-import { TBaseTableRow, TClientTableRow } from "./clients.types";
-import { TApiClient } from "../../../api/api.types";
-import { HelperFunctions } from "../../../helpers/HelperFunctions";
-import { TableDataService } from "../../../ui/table/table-data.service";
 import { ClientsService } from "./clients.service";
 
 @Component({
