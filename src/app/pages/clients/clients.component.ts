@@ -1,10 +1,11 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { TableComponent } from "../../../ui/table/table.component";
 import { ApiService } from "../../../api/api.service";
 import { Observable, Subscription } from "rxjs";
-import { TClientTableRow } from "./clients.types";
+import { TBaseTableRow, TClientTableRow } from "./clients.types";
 import { TApiClient } from "../../../api/api.types";
 import { HelperFunctions } from "../../../helpers/HelperFunctions";
+import { TableDataService } from "../../../ui/table/table-data.service";
 
 @Component({
   selector: 'initium-clients',
@@ -16,16 +17,28 @@ import { HelperFunctions } from "../../../helpers/HelperFunctions";
   styleUrl: './clients.component.scss'
 })
 export class ClientsComponent implements OnDestroy {
-    protected clients: TClientTableRow[] = [];
+    protected clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
     #apiService: ApiService = inject(ApiService);
     #subscriptions: Subscription[] = [];
+    #tableDataService: TableDataService = inject(TableDataService);
 
     constructor() {
         let clientsSubscription: Subscription = this.#apiService.getClients().subscribe((clients: TApiClient[]) => {
-            this.clients = this.buildTableRows(clients);
-        })
+            this.clients.set(this.buildTableRows(clients));
+        });
 
-        this.#subscriptions.push(clientsSubscription);
+        let tableCheckboxChangeSubscription: Subscription = this.#tableDataService.getCheckboxClickObservable().subscribe((clientRowData: TBaseTableRow) => {
+            this.clients.update((clients: TClientTableRow[]) => {
+                let copiedClients: TClientTableRow[] = structuredClone(clients);
+                let foundClient: TClientTableRow | undefined = copiedClients.find((client: TClientTableRow) => client.id === clientRowData.id);
+                if (foundClient) {
+                    foundClient.isChecked = clientRowData.isChecked;
+                }
+                return copiedClients;
+            });
+        });
+
+        this.#subscriptions.push(clientsSubscription, tableCheckboxChangeSubscription);
     }
 
     buildTableRows(clients: TApiClient[]): TClientTableRow[] {

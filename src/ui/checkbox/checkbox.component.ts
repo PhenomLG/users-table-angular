@@ -11,12 +11,14 @@ type TCheckMarkState = 'unselected' | 'indeterminate' | 'selected';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxComponent {
-    checked: InputSignal<boolean> = input<boolean>(false);
-    checkmarkState: InputSignal<TCheckMarkState> = input<TCheckMarkState>('unselected');
-    @Output() flowUpStatus: EventEmitter<boolean> = new EventEmitter();
+    checked: InputSignal<boolean> = input.required<boolean>();
+    id: InputSignal<string> = input.required<string>();
+    line: InputSignal<boolean> = input<boolean>(false);
+    @Output() flowUpStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     onChange(e: Event): void {
         let $el: HTMLInputElement = (e.target as HTMLInputElement);
+        console.log($el.checked);
         this.flowUpStatus.emit($el.checked);
     }
 }

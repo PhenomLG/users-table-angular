@@ -1,5 +1,5 @@
 <tr class="table__row">
-    <td><initium-checkbox></initium-checkbox></td>
+    <td><initium-checkbox [checked]="client().isChecked" [id]="client().id" (flowUpStatus)="onCheckboxClick($event)"></initium-checkbox></td>
     <td>{{ client().name }}</td>
     <td>{{ client().surname }}</td>
     <td>{{ client().email }}</td>
