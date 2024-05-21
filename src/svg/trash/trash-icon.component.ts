@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'initium-trash',
+    selector: 'initium-trash-icon',
     standalone: true,
     imports: [],
-    templateUrl: './trash.component.svg',
-    styleUrl: './trash.component.scss',
+    templateUrl: './trash-icon.component.svg',
+    styleUrl: './trash-icon.component.scss',
     host: {
         width: "36",
         height: "36",
@@ -14,6 +14,6 @@ import { Component } from '@angular/core';
         xmlns: "http://www.w3.org/2000/svg"
     }
 })
-export class TrashComponent {
+export class TrashIconComponent {
 
 }
