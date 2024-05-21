@@ -5,6 +5,8 @@
     border-radius: 20px;
 
     .table {
+        width: 100%;
+
         &__controls {
             display: flex;
             column-gap: 8px;
@@ -25,6 +27,21 @@
 
             &:active {
                 background-color: var(--click-icon-color);
+            }
+        }
+
+        &__header {
+            display: grid;
+            align-items: center;
+            grid-template-columns: 32px repeat(4, 1fr);
+            height: 48px;
+
+            th:nth-child(2), th:nth-child(3) {
+                text-align: left;
+            }
+
+            th:nth-child(4), th:nth-child(5) {
+                text-align: right;
             }
         }
     }

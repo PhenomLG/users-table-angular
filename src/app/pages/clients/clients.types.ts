@@ -1,5 +1,6 @@
 import { TApiClient } from "../../../api/api.types";
 
-export type TClient = TApiClient & {
+export type TClientTableRow = TApiClient & {
     id: string,
+    isChecked: boolean
 }

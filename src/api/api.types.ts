@@ -1,6 +1,6 @@
 export type TApiClient = {
     name: string,
-    secondName: string,
+    surname: string,
     email: string,
     phone: string
 }

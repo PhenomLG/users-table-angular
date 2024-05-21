@@ -1,6 +1,11 @@
 :host {
     .checkbox {
-        display: none;
+        position: absolute;
+        padding: 0;
+        height: 0;
+        width: 0;
+        border: 0;
+        overflow: hidden;
 
         &__label {
             position: relative;
@@ -9,6 +14,10 @@
             height: 18px;
             border: 2px solid #DADADA;
             cursor: pointer;
+        }
+
+        &_checkmarked {
+            background-color: #4A95F7;
         }
     }
 }

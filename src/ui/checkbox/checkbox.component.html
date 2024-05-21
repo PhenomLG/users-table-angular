@@ -1,3 +1,9 @@
-<input id="checkbox" type="checkbox" class="checkbox">
-<label for="checkbox" class="checkbox__label"></label>
+<input id="checkbox" type="checkbox" [checked]="checked()" class="checkbox" (change)="onChange($event)">
+<label for="checkbox" class="checkbox__label" [class.checkbox_checkmarked]="checkmarkState() !== 'unselected'">
+    @if (checkmarkState() === 'indeterminate') {
+        <div class="checkbox__indeterminate"></div>
+    }
+</label>
+
+
 
