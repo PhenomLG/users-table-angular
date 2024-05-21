@@ -1,0 +1,10 @@
+.color-scheme-light {
+    --default-delete-button-color: #2F67D5;
+    --hover-delete-button-color: #3C7CF8;
+    --pressed-delete-button-color: #194EB6;
+    --disabled-delete-button-color: #D8DEE9;
+
+    --default-cancel-button-color: #FFFFFF;
+    --hover-cancel-button-color: rgba(60, 124, 248, 0.1);
+    --pressed-cancel-button-color: rgba(25, 78, 182, 0.2);
+}
