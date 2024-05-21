@@ -19,7 +19,6 @@ export class CheckboxComponent {
 
     onChange(e: Event): void {
         let $el: HTMLInputElement = (e.target as HTMLInputElement);
-        console.log($el.checked);
         this.flowUpStatus.emit($el.checked);
     }
 }
