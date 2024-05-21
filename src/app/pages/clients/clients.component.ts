@@ -38,7 +38,17 @@ export class ClientsComponent implements OnDestroy {
             });
         });
 
-        this.#subscriptions.push(clientsSubscription, tableCheckboxChangeSubscription);
+        let tableAllCheckboxChangeSubscription: Subscription = this.#tableDataService.getAllCheckboxClickObservable().subscribe((value: boolean) => {
+            this.clients.update((clients: TClientTableRow[]) => {
+                let copiedClients: TClientTableRow[] = structuredClone(clients);
+                for (let client of copiedClients) {
+                    client.isChecked = value;
+                }
+                return copiedClients;
+            })
+        });
+
+        this.#subscriptions.push(clientsSubscription, tableCheckboxChangeSubscription, tableAllCheckboxChangeSubscription);
     }
 
     buildTableRows(clients: TApiClient[]): TClientTableRow[] {

@@ -13,11 +13,31 @@
             width: 18px;
             height: 18px;
             border: 2px solid #DADADA;
+            border-radius: 2px;
             cursor: pointer;
+        }
+
+        &__line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 2px;
+            background-color: var(--white-color);
+            border: unset;
+            transform: translate(-50%, -50%);
+        }
+
+        &__checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         &_checkmarked {
             background-color: #4A95F7;
+            border: unset;
         }
     }
 }

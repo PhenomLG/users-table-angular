@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, input, InputSignal, Output } from '@angular/core';
+import { NgIf } from "@angular/common";
 
 type TCheckMarkState = 'unselected' | 'indeterminate' | 'selected';
 
 @Component({
     selector: 'initium-checkbox',
     standalone: true,
-    imports: [],
+    imports: [
+        NgIf
+    ],
     templateUrl: './checkbox.component.html',
     styleUrl: './checkbox.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

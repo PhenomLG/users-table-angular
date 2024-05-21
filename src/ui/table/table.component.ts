@@ -24,6 +24,9 @@ export class TableComponent {
     allRowsChecked: Signal<boolean> = computed(() => {
         return this.clients().every((client: TClientTableRow) => client.isChecked);
     });
+    someRowsChecked: Signal<boolean> = computed(() => {
+        return this.clients().some((client: TClientTableRow) => client.isChecked) && !this.allRowsChecked();
+    })
 
     #tableDataService: TableDataService = inject(TableDataService);
 
