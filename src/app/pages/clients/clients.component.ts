@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { TableComponent } from "../../../ui/table/table.component";
 import { ApiService } from "../../../api/api.service";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { TBaseTableRow, TClientTableRow } from "./clients.types";
 import { TApiClient } from "../../../api/api.types";
 import { HelperFunctions } from "../../../helpers/HelperFunctions";
