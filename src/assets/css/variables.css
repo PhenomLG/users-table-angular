@@ -7,4 +7,7 @@
     --default-cancel-button-color: #FFFFFF;
     --hover-cancel-button-color: rgba(60, 124, 248, 0.1);
     --pressed-cancel-button-color: rgba(25, 78, 182, 0.2);
+
+    --plus-icon-color: #304879;
+    --trash-icon-color: #304879;
 }
