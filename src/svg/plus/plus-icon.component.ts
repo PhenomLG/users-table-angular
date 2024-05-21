@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'initium-plus-icon',
+    selector: 'svg[initium-plus-icon]',
     standalone: true,
     imports: [],
     templateUrl: './plus-icon.component.svg',

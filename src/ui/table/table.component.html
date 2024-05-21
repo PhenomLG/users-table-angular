@@ -1,0 +1,26 @@
+<div class="table__controls">
+    <div class="table__icon-wrapper">
+        <svg initium-plus-icon></svg>
+    </div>
+    <div class="table__icon-wrapper">
+        <svg initium-trash-icon></svg>
+    </div>
+</div>
+<table>
+    <tr>
+        <th><initium-checkbox></initium-checkbox></th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>E-email</th>
+        <th>Телефон</th>
+    </tr>
+    @for (client of clients(); track client.id) {
+        <tr>
+            <td><initium-checkbox></initium-checkbox></td>
+            <td>{{ client.name }}</td>
+            <td>{{ client.secondName }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.phone}}</td>
+        </tr>
+    }
+</table>

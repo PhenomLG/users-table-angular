@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    padding: 10px 15px;
+    background-color: var(--white-color);
+    border-radius: 20px;
+
+    .table {
+        &__controls {
+            display: flex;
+            column-gap: 8px;
+        }
+
+        &__icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 100px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--hover-icon-color);
+            }
+
+            &:active {
+                background-color: var(--click-icon-color);
+            }
+        }
+    }
+}
