@@ -49,8 +49,8 @@ export class ClientsService {
             let copiedClients: TClientTableRow[] = structuredClone(clients);
             let foundClientIndex: number = copiedClients.findIndex((client: TClientTableRow) => client.id === newClientInfo.id);
             if (foundClientIndex !== -1) {
-                copiedClients.splice(foundClientIndex, 1);
-                return [...copiedClients, newClientInfo];
+                copiedClients[foundClientIndex] = newClientInfo;
+                return copiedClients;
             }
             return [...clients, newClientInfo];
         });
