@@ -7,7 +7,10 @@ import { TClientTableRow } from "../../app/pages/clients/clients.types";
 import { TableDataService } from "./table-data.service";
 import {
     ClientPopupService
-} from "../../app/pages/clients/popups/new-client/new-client-popup/client-popup.service";
+} from "../../app/pages/clients/popups/new-client-popup/client-popup.service";
+import {
+    DeleteClientsPopupService
+} from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
 
 @Component({
     selector: 'initium-table',
@@ -33,6 +36,7 @@ export class TableComponent {
 
     #tableDataService: TableDataService = inject(TableDataService);
     #clientPopupService: ClientPopupService = inject(ClientPopupService);
+    #deleteClientsPopupService: DeleteClientsPopupService = inject(DeleteClientsPopupService);
 
     onChooseAllCheckboxClick(isChecked: boolean): void {
         this.#tableDataService.setAllCheckboxClickSubjectObservable(isChecked);
@@ -44,5 +48,9 @@ export class TableComponent {
 
     onClientNameClick(client: TClientTableRow): void {
         this.#clientPopupService.show(client);
+    }
+
+    onDeleteClients(): void {
+        this.#deleteClientsPopupService.show(this.clients().filter((client: TClientTableRow) => client.isChecked));
     }
 }

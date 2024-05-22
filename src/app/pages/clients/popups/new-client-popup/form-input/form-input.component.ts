@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
-import { InputComponent } from "../../../../../../../ui/input/input.component";
+import { InputComponent } from "../../../../../../ui/input/input.component";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { HelperFunctions } from "../../../../../../../helpers/HelperFunctions";
+import { HelperFunctions } from "../../../../../../helpers/HelperFunctions";
 import { BorderColorChangerDirective } from "./border-color-changer.directive";
 
 @Component({

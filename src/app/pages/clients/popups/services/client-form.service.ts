@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { TNewClientForm } from "../new-client/new-client-popup/client-form-types";
+import { TNewClientForm } from "../new-client-popup/client-form-types";
 import { Patterns } from "../../../../../helpers/Patterns";
 import { ClientsService } from "../../clients.service";
 import { TClientTableRow } from "../../clients.types";

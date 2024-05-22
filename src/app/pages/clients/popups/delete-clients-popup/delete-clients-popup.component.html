@@ -1,0 +1,9 @@
+<div class="modal">
+    <div class="modal__title">Удаление строк</div>
+    <div class="modal__description">Удалить выбранные строки ({{ clients.length }})?</div>
+    <div class="modal__buttons-wrapper">
+        <button initium-button role="cancel" (click)="onCloseModalClick()">Отмена</button>
+        <button initium-button role="delete" (click)="onDeleteClick()">Удалить</button>
+    </div>
+</div>
+<initium-default-overlay (click)="onCloseModalClick()"></initium-default-overlay>

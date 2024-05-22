@@ -1,21 +1,20 @@
 import { Injectable, Injector } from '@angular/core';
+import { BaseAE } from "../../../../../helpers/base-ae/base-ae.class";
 import { NgElement, WithProperties } from "@angular/elements";
-import { BaseAE } from "../../../../../../helpers/base-ae/base-ae.class";
-import { ClientEditPopupComponent } from "./client-edit-popup.component";
-import { TClientTableRow } from "../../../clients.types";
-
+import { DeleteClientsPopupComponent } from "./delete-clients-popup.component";
+import { TClientTableRow } from "../../clients.types";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'any'
 })
-export class ClientPopupService extends BaseAE {
-    private popupEl: (NgElement & WithProperties<ClientEditPopupComponent>) | undefined;
+export class DeleteClientsPopupService extends BaseAE {
+    private popupEl: (NgElement & WithProperties<DeleteClientsPopupComponent>) | undefined;
 
     constructor(private injector: Injector) {
-        super('robocode-error-popup-ae', injector, ClientEditPopupComponent);
+        super('initium-delete-clients-popup-ae', injector, DeleteClientsPopupComponent);
     }
 
-    override show(client?: TClientTableRow): this {
+    override show(clients: TClientTableRow[]): this {
         if (!!this.popupEl) {
             this.hide();
         }
@@ -25,9 +24,8 @@ export class ClientPopupService extends BaseAE {
             this.hide();
         });
 
-
         if (this.popupEl instanceof Node) {
-            this.popupEl.client = client;
+            this.popupEl.clients = clients;
             this.getParent().appendChild(this.popupEl);
         }
 

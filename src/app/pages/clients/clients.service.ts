@@ -56,6 +56,13 @@ export class ClientsService {
         });
     }
 
+    public deleteClients(clientsToRemove: TClientTableRow[]): void {
+        let clientsToRemoveIds: Set<string> = new Set(clientsToRemove.map((client: TClientTableRow) => client.id));
+        this.clients.update((clients: TClientTableRow[]) => {
+            return clients.filter((client: TClientTableRow) => !clientsToRemoveIds.has(client.id));
+        });
+    }
+
     public subscribeToCheckBoxChange(): Observable<TBaseTableRow> {
         return this.#tableDataService.getCheckboxClickObservable().pipe(
             tap((clientRowData: TBaseTableRow) => {
