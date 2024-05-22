@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, NgModule, signal, Signal, WritableSignal } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    computed, ElementRef,
+    inject,
+    Input,
+    NgModule,
+    signal,
+    Signal,
+    ViewChild,
+    WritableSignal
+} from '@angular/core';
 import { PlusIconComponent } from "../../svg/plus/plus-icon.component";
 import { TrashIconComponent } from "../../svg/trash/trash-icon.component";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
@@ -11,6 +22,7 @@ import {
 } from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
 import { InputComponent } from "../input/input.component";
 import { TApiClient } from "../../api/api.types";
+import { log } from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
     selector: 'initium-table',
@@ -27,14 +39,19 @@ import { TApiClient } from "../../api/api.types";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent {
+    @ViewChild('input') input: ElementRef | undefined;
     @Input({ alias: 'clients', required: true }) set _clients(clients: TClientTableRow[]) {
         this.clients.set(clients);
+        this.filteredClients.set(clients);
     }
 
-    clients: WritableSignal<TClientTableRow[]> =signal<TClientTableRow[]>([]);
-    checkedRows: Signal<TClientTableRow[]> = computed(() => {
+    protected clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
+    protected checkedRows: Signal<TClientTableRow[]> = computed(() => {
         return this.clients().filter((client:TClientTableRow) => client.isChecked);
-    })
+    });
+
+    protected filter: keyof TApiClient = 'name';
+    protected filteredClients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
 
     #tableDataService: TableDataService = inject(TableDataService);
     #clientPopupService: ClientPopupService = inject(ClientPopupService);
@@ -62,5 +79,10 @@ export class TableComponent {
                 return (client1[property] > client2[property]) ? 1 : -1 ;
             });
         });
+    }
+
+    onSearchInput($event: Event): void {
+        let input: HTMLInputElement | undefined = $event.target as HTMLInputElement;
+        this.filteredClients.set(this.clients().filter((client: TClientTableRow) => client[this.filter].toLowerCase().includes(input?.value.toLowerCase() ?? "")));
     }
 }
