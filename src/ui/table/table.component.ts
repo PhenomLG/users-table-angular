@@ -27,11 +27,9 @@ import {
 })
 export class TableComponent {
     clients: InputSignal<TClientTableRow[]> = input.required<TClientTableRow[]>();
-    allRowsChecked: Signal<boolean> = computed(() => {
-        return this.clients().every((client: TClientTableRow) => client.isChecked);
-    });
-    someRowsChecked: Signal<boolean> = computed(() => {
-        return this.clients().some((client: TClientTableRow) => client.isChecked) && !this.allRowsChecked();
+
+    checkedRows: Signal<TClientTableRow[]> = computed(() => {
+        return this.clients().filter((client:TClientTableRow) => client.isChecked);
     })
 
     #tableDataService: TableDataService = inject(TableDataService);
@@ -51,6 +49,6 @@ export class TableComponent {
     }
 
     onDeleteClients(): void {
-        this.#deleteClientsPopupService.show(this.clients().filter((client: TClientTableRow) => client.isChecked));
+        this.#deleteClientsPopupService.show(this.checkedRows());
     }
 }

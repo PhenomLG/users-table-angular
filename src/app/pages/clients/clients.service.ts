@@ -21,7 +21,7 @@ export class ClientsService {
             tap((clients: TApiClient[]) => {
                 this.clients.set(this.buildTableRows(clients));
             })
-        )
+        );
     }
 
     public buildTableRows(clients: TApiClient[]): TClientTableRow[] {

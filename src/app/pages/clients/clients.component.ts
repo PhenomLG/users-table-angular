@@ -1,13 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TableComponent } from "../../../ui/table/table.component";
-import { Subscription, tap } from "rxjs";
+import { merge, Observable, Subscription, tap } from "rxjs";
 import { ClientsService } from "./clients.service";
+import { AsyncPipe } from "@angular/common";
+import { TApiClient } from "../../../api/api.types";
 
 @Component({
     selector: 'initium-clients',
     standalone: true,
     imports: [
-        TableComponent
+        TableComponent,
+        AsyncPipe
     ],
     templateUrl: './clients.component.html',
     styleUrl: './clients.component.scss',
@@ -18,12 +21,11 @@ export class ClientsComponent implements OnInit, OnDestroy {
     #subscriptions: Subscription[] = [];
 
     ngOnInit(): void {
-        this.clientsService.loadClients().subscribe(() => {
-            this.#subscriptions.push(
-                this.clientsService.subscribeToAllCheckboxChange().subscribe(),
-                this.clientsService.subscribeToCheckBoxChange().subscribe()
-            );
-        });
+        this.#subscriptions.push(
+            this.clientsService.loadClients().subscribe(),
+            this.clientsService.subscribeToAllCheckboxChange().subscribe(),
+            this.clientsService.subscribeToCheckBoxChange().subscribe()
+        );
     }
 
     ngOnDestroy(): void {
