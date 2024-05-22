@@ -3,7 +3,6 @@ import { TableComponent } from "../../../ui/table/table.component";
 import { merge, Observable, Subscription, tap } from "rxjs";
 import { ClientsService } from "./clients.service";
 import { AsyncPipe } from "@angular/common";
-import { TApiClient } from "../../../api/api.types";
 
 @Component({
     selector: 'initium-clients',

@@ -31,6 +31,12 @@
                 background-color: var(--click-icon-color);
             }
         }
+
+        &__search {
+            width: 200px;
+            margin-top: 5px;
+            height: 30px;
+        }
     }
 }
 
@@ -50,6 +56,10 @@
         line-height: 16px;
         letter-spacing: 0.2px;
         color: #2F4C97;
+
+        & > span {
+            cursor: pointer;
+        }
     }
 
     th:nth-child(2), th:nth-child(3) {
