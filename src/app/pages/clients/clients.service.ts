@@ -1,38 +1,58 @@
-import { inject, Injectable, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { ApiService } from "../../../api/api.service";
-import { Observable, Subscription, take, tap } from "rxjs";
+import { Observable, take, tap } from "rxjs";
 import { TApiClient } from "../../../api/api.types";
 import { TBaseTableRow, TClientTableRow } from "./clients.types";
 import { HelperFunctions } from "../../../helpers/HelperFunctions";
 import { TableDataService } from "../../../ui/table/table-data.service";
 
 @Injectable({
-    providedIn: 'any'
+    providedIn: 'root'
 })
-export class ClientsService implements OnDestroy {
+export class ClientsService {
     public clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
 
     #apiService: ApiService = inject(ApiService);
     #tableDataService: TableDataService = inject(TableDataService);
-    #subscriptions: Subscription[] = [];
 
-    constructor() {
-        let getClientsSubscription: Subscription = this.#apiService.getClients().pipe(
+    public loadClients(): Observable<TApiClient[]> {
+        return this.#apiService.getClients().pipe(
             take(1),
             tap((clients: TApiClient[]) => {
                 this.clients.set(this.buildTableRows(clients));
             })
-        ).subscribe();
-        this.#subscriptions.push(getClientsSubscription);
+        )
     }
 
-    private buildTableRows(clients: TApiClient[]): TClientTableRow[] {
-        return clients.map((client: TApiClient) => {
+    public buildTableRows(client: TApiClient): TClientTableRow;
+    public buildTableRows(clients: TApiClient[]): TClientTableRow[];
+    public buildTableRows(clients: TApiClient[] | TApiClient): TClientTableRow[] | TClientTableRow {
+        if (Array.isArray(clients)) {
+            return clients.map((client: TApiClient) => {
+                return {
+                    ...client,
+                    id: HelperFunctions.randomString(5),
+                    isChecked: false
+                }
+            });
+        } else {
             return {
-                ...client,
+                ...clients,
                 id: HelperFunctions.randomString(5),
                 isChecked: false
             }
+        }
+    }
+
+    public saveClient(newClientInfo: TClientTableRow): void {
+        this.clients.update((clients: TClientTableRow[]) => {
+            let copiedClients: TClientTableRow[] = structuredClone(clients);
+            let foundClientIndex: number = copiedClients.findIndex((client: TClientTableRow) => client.id === newClientInfo.id);
+            if (foundClientIndex !== -1) {
+                copiedClients.splice(foundClientIndex, 1);
+                return [...copiedClients, newClientInfo];
+            }
+            return [...clients, newClientInfo];
         });
     }
 
@@ -63,9 +83,5 @@ export class ClientsService implements OnDestroy {
                 })
             })
         );
-    }
-
-    ngOnDestroy(): void {
-        this.#subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
     }
 }

@@ -6,8 +6,8 @@ import { TableRowComponent } from "./table-row/table-row.component";
 import { TClientTableRow } from "../../app/pages/clients/clients.types";
 import { TableDataService } from "./table-data.service";
 import {
-    NewClientPopupService
-} from "../../app/pages/clients/popups/new-client/new-client-popup/new-client-popup.service";
+    ClientPopupService
+} from "../../app/pages/clients/popups/new-client/new-client-popup/client-popup.service";
 
 @Component({
     selector: 'initium-table',
@@ -32,13 +32,17 @@ export class TableComponent {
     })
 
     #tableDataService: TableDataService = inject(TableDataService);
-    #newClientPopupService: NewClientPopupService = inject(NewClientPopupService);
+    #clientPopupService: ClientPopupService = inject(ClientPopupService);
 
     onChooseAllCheckboxClick(isChecked: boolean): void {
         this.#tableDataService.setAllCheckboxClickSubjectObservable(isChecked);
     }
 
     onAddNewClient(): void {
-        this.#newClientPopupService.show();
+        this.#clientPopupService.show();
+    }
+
+    onClientNameClick(client: TClientTableRow): void {
+        this.#clientPopupService.show(client);
     }
 }

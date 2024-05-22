@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     imports: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './input.component.html',
-    styleUrl: './input.component.css'
+    styleUrl: './input.component.scss'
 })
 export class InputComponent {
 }

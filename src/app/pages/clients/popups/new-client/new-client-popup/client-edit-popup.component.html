@@ -1,0 +1,34 @@
+<div class="modal">
+    <div class="modal__title">новый клиент</div>
+    <form [formGroup]="clientFormService.getForm()" class="modal__form">
+        <initium-form-input
+            [control]="clientFormService.getForm().controls.name"
+            placeholder="Имя"
+            label="Имя"
+            errorMessage="Минимальное количество символов: 2">
+        </initium-form-input>
+        <initium-form-input
+            [control]="clientFormService.getForm().controls.surname"
+            placeholder="Фамилия"
+            label="Фамилия"
+            errorMessage="Минимальное количество символов: 2">
+        </initium-form-input>
+        <initium-form-input
+            [control]="clientFormService.getForm().controls.email"
+            placeholder="E-mail"
+            label="E-mail"
+            errorMessage="Некорректный адрес">
+        </initium-form-input>
+        <initium-form-input
+            [control]="clientFormService.getForm().controls.phone"
+            placeholder="Телефон"
+            label="Телефон"
+            errorMessage="Некорректный номер телефона">
+        </initium-form-input>
+    </form>
+    <div class="modal__buttons-wrapper">
+        <button initium-button role="cancel" (click)="onCloseModalClick()">Отмена</button>
+        <button initium-button role="delete" [disabled]="clientFormService.isFormInvalid()" (click)="onSaveClick()">Сохранить</button>
+    </div>
+</div>
+<initium-default-overlay (click)="onCloseModalClick()"></initium-default-overlay>

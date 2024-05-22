@@ -15,6 +15,6 @@
         <th>Телефон</th>
     </tr>
     @for (client of clients(); track client.id) {
-        <initium-table-row [client]="client"></initium-table-row>
+        <initium-table-row [client]="client" (rowNameClick)="onClientNameClick($event)"></initium-table-row>
     }
 </table>

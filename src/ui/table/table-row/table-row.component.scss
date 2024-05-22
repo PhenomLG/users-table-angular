@@ -1,6 +1,11 @@
 :host {
     display: block;
     width: 100%;
+
+    &:hover {
+        background-color: rgba(143, 175, 255, 0.1);
+    }
+
     .table {
         &__row {
             display: grid;
@@ -11,6 +16,10 @@
             td:nth-child(4), td:nth-child(5) {
                 text-align: right;
             }
+        }
+
+        &__row-name {
+            cursor: pointer
         }
     }
 }

@@ -1,0 +1,10 @@
+<label [for]="id" class="label"
+       [class.hidden]="!control().getRawValue()">{{ label() }}</label>
+<input initiumBorderColorChanger
+    initium-input
+    [id]="id"
+    [formControl]="control()"
+    [placeholder]="placeholder()"
+    [class.invalid]="isControlInvalid()"/>
+<span class="span" [class.error-span]="isControlInvalid()">{{ errorMessage() }}</span>
+
