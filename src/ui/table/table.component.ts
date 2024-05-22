@@ -1,15 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    computed, ElementRef,
-    inject,
-    Input,
-    NgModule,
-    signal,
-    Signal,
-    ViewChild,
-    WritableSignal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, Input, signal, Signal, ViewChild, WritableSignal } from '@angular/core';
 import { PlusIconComponent } from "../../svg/plus/plus-icon.component";
 import { TrashIconComponent } from "../../svg/trash/trash-icon.component";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
@@ -17,12 +6,9 @@ import { TableRowComponent } from "./table-row/table-row.component";
 import { TClientTableRow } from "../../app/pages/clients/clients.types";
 import { TableDataService } from "./table-data.service";
 import { ClientPopupService } from "../../app/pages/clients/popups/new-client-popup/client-popup.service";
-import {
-    DeleteClientsPopupService
-} from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
+import { DeleteClientsPopupService } from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
 import { InputComponent } from "../input/input.component";
 import { TApiClient } from "../../api/api.types";
-import { log } from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
     selector: 'initium-table',
