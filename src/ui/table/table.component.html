@@ -5,7 +5,7 @@
     <div class="table__icon-wrapper" (click)="onDeleteClients()">
         <svg initium-trash-icon></svg>
     </div>
-    <input class="table__search" type="text" initium-input (input)="onSearchInput($event)">
+    <input class="table__search" type="text" initium-input (input)="onSearchInput($event)" >
 </div>
 <table class="table">
     <tr class="table__row">
@@ -15,6 +15,7 @@
         <th><span (click)="sortClientsByProperty('email')">E-mail</span></th>
         <th><span (click)="sortClientsByProperty('phone')">Телефон</span></th>
     </tr>
+
     @for (client of filteredClients(); track client.id) {
         <initium-table-row [class.last-row]="$last" [client]="client" (rowNameClick)="onClientNameClick($event)"></initium-table-row>
     }

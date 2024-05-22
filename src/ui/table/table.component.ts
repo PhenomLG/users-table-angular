@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, Input, signal, Signal, ViewChild, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Input, signal, Signal, WritableSignal } from '@angular/core';
 import { PlusIconComponent } from "../../svg/plus/plus-icon.component";
 import { TrashIconComponent } from "../../svg/trash/trash-icon.component";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
@@ -6,7 +6,9 @@ import { TableRowComponent } from "./table-row/table-row.component";
 import { TClientTableRow } from "../../app/pages/clients/clients.types";
 import { TableDataService } from "./table-data.service";
 import { ClientPopupService } from "../../app/pages/clients/popups/new-client-popup/client-popup.service";
-import { DeleteClientsPopupService } from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
+import {
+    DeleteClientsPopupService
+} from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
 import { InputComponent } from "../input/input.component";
 import { TApiClient } from "../../api/api.types";
 
@@ -25,10 +27,16 @@ import { TApiClient } from "../../api/api.types";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent {
-    @ViewChild('input') input: ElementRef | undefined;
     @Input({ alias: 'clients', required: true }) set _clients(clients: TClientTableRow[]) {
         this.clients.set(clients);
-        this.filteredClients.set(clients);
+
+        // Обновляем фильтр, если он активен
+        if (this.filteredClients().length) {
+            let filteredIds: Set<string> = new Set(this.filteredClients().map((client: TClientTableRow) => client.id));
+            this.filteredClients.set(this.clients().filter((client: TClientTableRow) => filteredIds.has(client.id)));
+        } else {
+            this.filteredClients.set(clients);
+        }
     }
 
     protected clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
@@ -68,7 +76,7 @@ export class TableComponent {
     }
 
     onSearchInput($event: Event): void {
-        let input: HTMLInputElement | undefined = $event.target as HTMLInputElement;
-        this.filteredClients.set(this.clients().filter((client: TClientTableRow) => client[this.filter].toLowerCase().includes(input?.value.toLowerCase() ?? "")));
+        let element: HTMLInputElement = $event.target as HTMLInputElement;
+        this.filteredClients.set(this.clients().filter((client: TClientTableRow) => client[this.filter].toLowerCase().includes(element.value.toLowerCase() ?? "")));
     }
 }
