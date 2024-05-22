@@ -1,17 +1,17 @@
 :host {
     display: block;
-    padding: 10px 15px;
     background-color: var(--white-color);
     border-radius: 20px;
     min-width: 800px;
+    overflow: hidden;
 
     .table {
         width: 100%;
-        padding-left: 6px;
 
         &__controls {
             display: flex;
             column-gap: 8px;
+            padding: 10px 0 0 18px;
         }
 
         &__icon-wrapper {
@@ -31,20 +31,33 @@
                 background-color: var(--click-icon-color);
             }
         }
-
-        &__header {
-            display: grid;
-            align-items: center;
-            grid-template-columns: 32px repeat(4, 1fr);
-            height: 48px;
-
-            th:nth-child(2), th:nth-child(3) {
-                text-align: left;
-            }
-
-            th:nth-child(4), th:nth-child(5) {
-                text-align: right;
-            }
-        }
     }
 }
+
+::ng-deep initium-table-row .table__row,
+.table__row {
+    display: grid;
+    grid-template-columns: 32px repeat(4, 1fr);
+    height: 48px;
+    padding: 0 24px;
+    align-content: center;
+    border-bottom: 1px solid rgba(171, 171, 172, 0.16);
+
+    th {
+        font-family: 'Roboto Medium', sans-serif;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.2px;
+        color: #2F4C97;
+    }
+
+    th:nth-child(2), th:nth-child(3) {
+        text-align: left;
+    }
+
+    td:nth-child(4), td:nth-child(5), th:nth-child(4), th:nth-child(5) {
+        text-align: right;
+    }
+}
+

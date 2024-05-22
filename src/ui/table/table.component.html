@@ -7,7 +7,7 @@
     </div>
 </div>
 <table class="table">
-    <tr class="table__header">
+    <tr class="table__row">
         <th><initium-checkbox [checked]="allRowsChecked()" [id]="'all'" [line]="someRowsChecked()"  (flowUpStatus)="onChooseAllCheckboxClick($event)"></initium-checkbox></th>
         <th>Имя</th>
         <th>Фамилия</th>
@@ -15,6 +15,6 @@
         <th>Телефон</th>
     </tr>
     @for (client of clients(); track client.id) {
-        <initium-table-row [client]="client" (rowNameClick)="onClientNameClick($event)"></initium-table-row>
+        <initium-table-row [class.last-row]="$last" [client]="client" (rowNameClick)="onClientNameClick($event)"></initium-table-row>
     }
 </table>
