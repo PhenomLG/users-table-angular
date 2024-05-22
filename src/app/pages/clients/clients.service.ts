@@ -24,25 +24,16 @@ export class ClientsService {
         )
     }
 
-    public buildTableRows(client: TApiClient): TClientTableRow;
-    public buildTableRows(clients: TApiClient[]): TClientTableRow[];
-    public buildTableRows(clients: TApiClient[] | TApiClient): TClientTableRow[] | TClientTableRow {
-        if (Array.isArray(clients)) {
-            return clients.map((client: TApiClient) => {
-                return {
-                    ...client,
-                    id: HelperFunctions.randomString(5),
-                    isChecked: false
-                }
-            });
-        } else {
+    public buildTableRows(clients: TApiClient[]): TClientTableRow[] {
+        return clients.map((client: TApiClient) => {
             return {
-                ...clients,
+                ...client,
                 id: HelperFunctions.randomString(5),
                 isChecked: false
             }
-        }
+        });
     }
+
 
     public saveClient(newClientInfo: TClientTableRow): void {
         this.clients.update((clients: TClientTableRow[]) => {
