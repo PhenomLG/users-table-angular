@@ -1,5 +1,5 @@
 <div class="modal">
-    <div class="modal__title">новый клиент</div>
+    <div class="modal__title">{{ client ? 'редактирование' : 'новый клиент' }}</div>
     <form [formGroup]="clientFormService.getForm()" class="modal__form">
         <initium-form-input
             [control]="clientFormService.getForm().controls.name"
