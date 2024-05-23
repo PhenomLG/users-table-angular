@@ -7,7 +7,7 @@ import { HelperFunctions } from "../../../helpers/HelperFunctions";
 import { TableDataService } from "../../../ui/table/table-data.service";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class ClientsService {
     public clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);

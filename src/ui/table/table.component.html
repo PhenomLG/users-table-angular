@@ -6,12 +6,7 @@
         <svg initium-trash-icon></svg>
     </div>
     <input class="table__search" type="text" initium-input (input)="onSearchInput($event)">
-    <select class="table__search-menu">
-        <option value="name">Имя</option>
-        <option value="surname">Фамилия</option>
-        <option value="email">E-mail</option>
-        <option value="phone">Телефон</option>
-    </select>
+    <initium-dropdown id="serach" [options]="tableFilterService.getFilterOptions()" [formControl]="tableFilterService.filterKeyControl"></initium-dropdown>
 </div>
 <table class="table">
     <tr class="table__row">

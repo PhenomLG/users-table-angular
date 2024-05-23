@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import {  Observable, Subject } from "rxjs";
 import { TBaseTableRow } from "../../app/pages/clients/clients.types";
 
-@Injectable({
-    providedIn: 'any'
-})
+@Injectable(
+    { providedIn: 'any' })
 export class TableDataService {
     #checkboxClickSubject: Subject<TBaseTableRow> = new Subject<TBaseTableRow>();
     #allCheckboxClickSubject: Subject<boolean> = new Subject<boolean>();

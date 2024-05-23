@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TableComponent } from "../../../ui/table/table.component";
-import { merge, Observable, Subscription, tap } from "rxjs";
+import { Subscription } from "rxjs";
 import { ClientsService } from "./clients.service";
 import { AsyncPipe } from "@angular/common";
+import { TableDataService } from "../../../ui/table/table-data.service";
 
 @Component({
     selector: 'initium-clients',
@@ -13,7 +14,8 @@ import { AsyncPipe } from "@angular/common";
     ],
     templateUrl: './clients.component.html',
     styleUrl: './clients.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [TableDataService, ClientsService] // сахар над useClass
 })
 export class ClientsComponent implements OnInit, OnDestroy {
     protected clientsService: ClientsService = inject(ClientsService);

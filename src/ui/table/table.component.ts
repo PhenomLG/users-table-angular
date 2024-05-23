@@ -11,6 +11,8 @@ import { InputComponent } from "../input/input.component";
 import { TApiClient } from "../../api/api.types";
 import { TableFilterService } from "./table-filter.service";
 import { AsyncPipe } from "@angular/common";
+import { DropdownComponent, TSelectOption } from "../dropdown/dropdown.component";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
     selector: 'initium-table',
@@ -22,6 +24,8 @@ import { AsyncPipe } from "@angular/common";
         TableRowComponent,
         InputComponent,
         AsyncPipe,
+        DropdownComponent,
+        ReactiveFormsModule,
     ],
     templateUrl: './table.component.html',
     styleUrl: './table.component.scss',
@@ -39,15 +43,16 @@ export class TableComponent {
         }
     }
 
-    protected clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
-    protected checkedRows: Signal<TClientTableRow[]> = computed(() => {
-        return this.clients().filter((client:TClientTableRow) => client.isChecked);
-    });
-
     protected tableFilterService: TableFilterService = inject(TableFilterService);
     #tableDataService: TableDataService = inject(TableDataService);
     #clientPopupService: ClientPopupService = inject(ClientPopupService);
     #deleteClientsPopupService: DeleteClientsPopupService = inject(DeleteClientsPopupService);
+
+
+    protected clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
+    protected checkedRows: Signal<TClientTableRow[]> = computed(() => {
+        return this.clients().filter((client:TClientTableRow) => client.isChecked);
+    });
 
     onChooseAllCheckboxClick(isChecked: boolean): void {
         this.#tableDataService.setAllCheckboxClickSubjectObservable(isChecked);
