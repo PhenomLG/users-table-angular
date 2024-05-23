@@ -36,6 +36,22 @@
             width: 200px;
             margin-top: 5px;
             height: 30px;
+
+        }
+
+        &__search-menu{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 10px;
+            border-color: #BBC5C9;
+            width: 100px;
+            margin-top: 5px;
+            height: 30px;
+            border-radius: 4px;
+            &:focus {
+                outline: none;
+            }
         }
     }
 }

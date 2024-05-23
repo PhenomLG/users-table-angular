@@ -6,11 +6,11 @@ import { TableRowComponent } from "./table-row/table-row.component";
 import { TClientTableRow } from "../../app/pages/clients/clients.types";
 import { TableDataService } from "./table-data.service";
 import { ClientPopupService } from "../../app/pages/clients/popups/new-client-popup/client-popup.service";
-import {
-    DeleteClientsPopupService
-} from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
+import { DeleteClientsPopupService } from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
 import { InputComponent } from "../input/input.component";
 import { TApiClient } from "../../api/api.types";
+import { TableFilterService } from "./table-filter.service";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
     selector: 'initium-table',
@@ -21,6 +21,7 @@ import { TApiClient } from "../../api/api.types";
         CheckboxComponent,
         TableRowComponent,
         InputComponent,
+        AsyncPipe,
     ],
     templateUrl: './table.component.html',
     styleUrl: './table.component.scss',
@@ -31,11 +32,10 @@ export class TableComponent {
         this.clients.set(clients);
 
         // Обновляем фильтр, если он активен
-        if (this.filteredClients().length) {
-            let filteredIds: Set<string> = new Set(this.filteredClients().map((client: TClientTableRow) => client.id));
-            this.filteredClients.set(this.clients().filter((client: TClientTableRow) => filteredIds.has(client.id)));
+        if (this.tableFilterService.filterSubject.value.length) {
+            this.tableFilterService.updateFilter(clients);
         } else {
-            this.filteredClients.set(clients);
+            this.tableFilterService.setFilter(clients);
         }
     }
 
@@ -44,9 +44,7 @@ export class TableComponent {
         return this.clients().filter((client:TClientTableRow) => client.isChecked);
     });
 
-    protected filter: keyof TApiClient = 'name';
-    protected filteredClients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
-
+    protected tableFilterService: TableFilterService = inject(TableFilterService);
     #tableDataService: TableDataService = inject(TableDataService);
     #clientPopupService: ClientPopupService = inject(ClientPopupService);
     #deleteClientsPopupService: DeleteClientsPopupService = inject(DeleteClientsPopupService);
@@ -77,6 +75,6 @@ export class TableComponent {
 
     onSearchInput($event: Event): void {
         let element: HTMLInputElement = $event.target as HTMLInputElement;
-        this.filteredClients.set(this.clients().filter((client: TClientTableRow) => client[this.filter].toLowerCase().includes(element.value.toLowerCase() ?? "")));
+        this.tableFilterService.handleSearchInput(this.clients(), element.value);
     }
 }
