@@ -9,7 +9,7 @@ import { NgIf } from "@angular/common";
     imports: [
         NgIf
     ],
-    // changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckboxComponent {
     @Output() flowUpStatus: EventEmitter<boolean> = new EventEmitter<boolean>();

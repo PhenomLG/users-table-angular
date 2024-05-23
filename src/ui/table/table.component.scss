@@ -32,11 +32,19 @@
             }
         }
 
+        &__search-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            column-gap: 5px;
+            margin-top: 4px;
+            margin-left: 10px;
+        }
+
         &__search {
             width: 200px;
             margin-top: 5px;
             height: 30px;
-
         }
     }
 }

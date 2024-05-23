@@ -4,7 +4,7 @@ import { catchError, mergeMap, Observable, of, throwError } from "rxjs";
 import { TApiClient, TApiClientsRequest } from "./api.types";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class ApiService {
     #httpClient: HttpClient = inject(HttpClient);

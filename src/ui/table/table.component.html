@@ -5,8 +5,11 @@
     <div class="table__icon-wrapper" (click)="onDeleteClients()">
         <svg initium-trash-icon></svg>
     </div>
+    <div class="table__search-menu">
+        <span>Поиск по: </span>
+        <initium-dropdown [options]="tableFilterService.getFilterOptions()" [formControl]="tableFilterService.filterKeyControl"></initium-dropdown>
+    </div>
     <input class="table__search" type="text" initium-input (input)="onSearchInput($event)">
-    <initium-dropdown id="serach" [options]="tableFilterService.getFilterOptions()" [formControl]="tableFilterService.filterKeyControl"></initium-dropdown>
 </div>
 <table class="table">
     <tr class="table__row">

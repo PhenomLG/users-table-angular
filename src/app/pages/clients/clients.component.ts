@@ -3,7 +3,6 @@ import { TableComponent } from "../../../ui/table/table.component";
 import { Subscription } from "rxjs";
 import { ClientsService } from "./clients.service";
 import { AsyncPipe } from "@angular/common";
-import { TableDataService } from "../../../ui/table/table-data.service";
 
 @Component({
     selector: 'initium-clients',
@@ -14,8 +13,7 @@ import { TableDataService } from "../../../ui/table/table-data.service";
     ],
     templateUrl: './clients.component.html',
     styleUrl: './clients.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [TableDataService, ClientsService] // сахар над useClass
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsComponent implements OnInit, OnDestroy {
     protected clientsService: ClientsService = inject(ClientsService);

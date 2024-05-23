@@ -3,7 +3,7 @@ import {  Observable, Subject } from "rxjs";
 import { TBaseTableRow } from "../../app/pages/clients/clients.types";
 
 @Injectable(
-    { providedIn: 'any' })
+    { providedIn: 'root' })
 export class TableDataService {
     #checkboxClickSubject: Subject<TBaseTableRow> = new Subject<TBaseTableRow>();
     #allCheckboxClickSubject: Subject<boolean> = new Subject<boolean>();

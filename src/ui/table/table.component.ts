@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, signal, Signal, WritableSignal } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    inject,
+    Input,
+    signal,
+    Signal,
+    WritableSignal
+} from '@angular/core';
 import { PlusIconComponent } from "../../svg/plus/plus-icon.component";
 import { TrashIconComponent } from "../../svg/trash/trash-icon.component";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
@@ -6,13 +15,15 @@ import { TableRowComponent } from "./table-row/table-row.component";
 import { TClientTableRow } from "../../app/pages/clients/clients.types";
 import { TableDataService } from "./table-data.service";
 import { ClientPopupService } from "../../app/pages/clients/popups/new-client-popup/client-popup.service";
-import { DeleteClientsPopupService } from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
+import {
+    DeleteClientsPopupService
+} from "../../app/pages/clients/popups/delete-clients-popup/delete-clients-popup.service";
 import { InputComponent } from "../input/input.component";
 import { TApiClient } from "../../api/api.types";
 import { TableFilterService } from "./table-filter.service";
 import { AsyncPipe } from "@angular/common";
-import { DropdownComponent, TSelectOption } from "../dropdown/dropdown.component";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { DropdownComponent } from "../dropdown/dropdown.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
     selector: 'initium-table',
@@ -35,7 +46,11 @@ export class TableComponent {
     @Input({ alias: 'clients', required: true }) set _clients(clients: TClientTableRow[]) {
         this.clients.set(clients);
 
-        // Обновляем фильтр, если он активен
+        if (this.searchCache !== '') {
+            this.tableFilterService.handleSearchInput(clients, this.searchCache);
+            return;
+        }
+
         if (this.tableFilterService.filterSubject.value.length) {
             this.tableFilterService.updateFilter(clients);
         } else {
@@ -53,6 +68,8 @@ export class TableComponent {
     protected checkedRows: Signal<TClientTableRow[]> = computed(() => {
         return this.clients().filter((client:TClientTableRow) => client.isChecked);
     });
+
+    private searchCache:string = "";
 
     onChooseAllCheckboxClick(isChecked: boolean): void {
         this.#tableDataService.setAllCheckboxClickSubjectObservable(isChecked);
@@ -80,6 +97,7 @@ export class TableComponent {
 
     onSearchInput($event: Event): void {
         let element: HTMLInputElement = $event.target as HTMLInputElement;
+        this.searchCache = element.value;
         this.tableFilterService.handleSearchInput(this.clients(), element.value);
     }
 }

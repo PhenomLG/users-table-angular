@@ -7,7 +7,7 @@ import { HelperFunctions } from "../../../helpers/HelperFunctions";
 import { TableDataService } from "../../../ui/table/table-data.service";
 
 @Injectable({
-    providedIn: 'any'
+    providedIn: 'root'
 })
 export class ClientsService {
     public clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
@@ -43,7 +43,7 @@ export class ClientsService {
                 copiedClients[foundClientIndex] = newClientInfo;
                 return copiedClients;
             }
-            return [...clients, newClientInfo];
+            return [...copiedClients, newClientInfo];
         });
     }
 
