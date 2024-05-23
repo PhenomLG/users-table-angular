@@ -3,7 +3,7 @@ import {
     Component,
     computed,
     inject,
-    Input,
+    Input, OnDestroy,
     signal,
     Signal,
     WritableSignal
@@ -24,6 +24,7 @@ import { TableFilterService } from "./table-filter.service";
 import { AsyncPipe } from "@angular/common";
 import { DropdownComponent } from "../dropdown/dropdown.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'initium-table',
@@ -42,34 +43,35 @@ import { ReactiveFormsModule } from "@angular/forms";
     styleUrl: './table.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent {
+export class TableComponent implements OnDestroy{
     @Input({ alias: 'clients', required: true }) set _clients(clients: TClientTableRow[]) {
         this.clients.set(clients);
 
-        if (this.searchCache !== '') {
-            this.tableFilterService.handleSearchInput(clients, this.searchCache);
+        if (this.tableFilterService.searchCache !== '') {
+            this.tableFilterService.handleSearchInput(clients, this.tableFilterService.searchCache);
             return;
         }
+        this.tableFilterService.setFilter(clients);
 
-        if (this.tableFilterService.filterSubject.value.length) {
-            this.tableFilterService.updateFilter(clients);
-        } else {
-            this.tableFilterService.setFilter(clients);
-        }
     }
 
     protected tableFilterService: TableFilterService = inject(TableFilterService);
     #tableDataService: TableDataService = inject(TableDataService);
     #clientPopupService: ClientPopupService = inject(ClientPopupService);
     #deleteClientsPopupService: DeleteClientsPopupService = inject(DeleteClientsPopupService);
-
+    #subscriptions: Subscription[] = [];
 
     protected clients: WritableSignal<TClientTableRow[]> = signal<TClientTableRow[]>([]);
     protected checkedRows: Signal<TClientTableRow[]> = computed(() => {
         return this.clients().filter((client:TClientTableRow) => client.isChecked);
     });
 
-    private searchCache:string = "";
+    constructor() {
+        let filterKeySubscription: Subscription = this.tableFilterService.filterKeyControl.valueChanges.subscribe((value: keyof TApiClient) => {
+            this.tableFilterService.handleSearchInput(this.clients(), this.tableFilterService.searchCache);
+        });
+        this.#subscriptions.push(filterKeySubscription);
+    }
 
     onChooseAllCheckboxClick(isChecked: boolean): void {
         this.#tableDataService.setAllCheckboxClickSubjectObservable(isChecked);
@@ -97,7 +99,10 @@ export class TableComponent {
 
     onSearchInput($event: Event): void {
         let element: HTMLInputElement = $event.target as HTMLInputElement;
-        this.searchCache = element.value;
         this.tableFilterService.handleSearchInput(this.clients(), element.value);
+    }
+
+    ngOnDestroy(): void {
+        this.#subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
     }
 }

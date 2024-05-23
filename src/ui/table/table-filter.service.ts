@@ -13,6 +13,7 @@ export class TableFilterService {
 
     public filterSubject: BehaviorSubject<TClientTableRow[]> = new BehaviorSubject<TClientTableRow[]>([]);
     public filterKeyControl: FormControl<keyof TApiClient> = this.#fb.nonNullable.control('name');
+    public searchCache: string = "";
 
     public getFilterOptions(): TSelectOption[] {
         return [
@@ -27,12 +28,8 @@ export class TableFilterService {
         this.filterSubject.next(clients);
     }
 
-    public updateFilter(clients: TClientTableRow[]): void {
-        let filteredIds: Set<string> = new Set(this.filterSubject.value.map((client: TClientTableRow) => client.id));
-        this.filterSubject.next(clients.filter((client: TClientTableRow) => filteredIds.has(client.id)))
-    }
-
     public handleSearchInput(clients: TClientTableRow[], value: string): void {
+        this.searchCache = value;
         this.filterSubject.next(clients.filter((client: TClientTableRow) => client?.[this.filterKeyControl.value].toLowerCase().includes(value.toLowerCase() ?? "")));
     }
 }
